@@ -16,22 +16,22 @@ jobs:
               with:
                 distribution: 'temurin'
                 java-version: '17'
-    #         - name: Build project
-    #           run: mvn clean install -DskipTests
-    #         - name: Login Docker Hub
-    #           run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-    #         - name: Build docker image
-    #           run: docker build -t jeffersoncdantas/indicai .
-    #         - name: Push image docker
-    #           run: docker push jeffersoncdantas/indicai
+            - name: Build project
+              run: mvn clean install -DskipTests
+            - name: Login Docker Hub
+              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+            - name: Build docker image
+              run: docker build -t jeffersoncdantas/projeto-aws .
+            - name: Push image docker
+              run: docker push jeffersoncdantas/projeto-aws
               
-    # deploy:
-    #     needs: build
-    #     runs-on: self-hosted
-    #     steps:
-    #         - name: Pull image from docker hub
-    #           run: docker pull jeffersoncdantas/indicai:latest
-    #         - name: Remove docker container
-    #           run: docker rm -f indicai
-    #         - name: Run docker container
-    #           run: docker run -d -p 8080:8080 --name indicai jeffersoncdantas/indicai
+    deploy:
+        needs: build
+        runs-on: self-hosted
+        steps:
+            - name: Pull image from docker hub
+              run: docker pull jeffersoncdantas/projeto-aws:latest
+            - name: Remove docker container
+              run: docker rm -f projeto-aws
+            - name: Run docker container
+              run: docker run -d -p 8080:8080 --name projeto-aws jeffersoncdantas/projeto-aws
